@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:tb="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Create New School</title>
+    <script
+            src="https://code.jquery.com/jquery-3.6.0.js"
+            integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+            crossorigin="anonymous"></script>
+
+    <script type="text/javascript" th:src="@{/js/ajax.js}"></script>
+    <script src= "https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" ></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/cosmo/bootstrap.min.css" />
+</head>
+<body>
+<div align="center">
+    <h1>All Nepal Schools</h1>
+
+</div>
+<br>
+<div class = "row">
+    <div class="col-sm-4 col-md-5 ml-1">
+        <!-- th:action="@{/saveSchool}"-->
+        <form action="#" th:action="@{#}" method="post" id ="saveSchool">
+            <div alight="left">
+                <tr>
+                    <label class="form-label block-id" >Id</label>
+                    <td>
+                        <input type="number" class="form-control" disabled  id="id_school"/>
+                    </td>
+                </tr>
+            </div>
+            <div alight="left">
+                <tr>
+                    <label class="form-label" >School Id</label>
+                    <td>
+                        <input type="number" name="schoolId" class="form-control" id="schoolId" placeholder="School Id"/>
+                    </td>
+                </tr>
+            </div>
+            <div alight="left">
+                <tr>
+                    <label class="form-label" >School Name</label>
+                    <td><input type="text" name="schoolName" class="form-control" id= "schoolName" placeholder="School Name" /></td>
+                </tr>
+            </div>
+            <div alight="left">
+                <tr>
+                    <label class="form-label" >School Level</label>
+                    <td><input type="text" name="schoolLevel"  class="form-control" id="schoolLevel" placeholder="School Level" /></td>
+                </tr>
+            </div>
+            <div alight="left">
+                <tr>
+                    <label class="form-label" >Address</label>
+                    <td><input type="text" name="address" class="form-control" id="address" placeholder="Address" /></td>
+                </tr>
+            </div>
+            <div alight="left">
+                <tr>
+                    <label class="form-label" >City</label>
+                    <td><input type="text" name="city" class="form-control" id="city" placeholder="City" /></td>
+                </tr>
+            </div>
+            <div alight="left">
+                <tr>
+                    <label class="form-label" >Phone</label>
+                    <td><input type="number" name="phone" class="form-control" id="phone" placeholder="Phone" /></td>
+                </tr>
+            </div>
+            <br>
+            <tr>
+                <td colspan="2"><button type="submit" class="btn btn-info"  onclick="alertSave(), saveData()">Save</button> </td>
+            </tr>
+            </table>
+        </form>
+    </div>
+    <div class="col-md-6">
+        <h3>School Records</h3>
+        <br>
+        <table class="table table-hover" id="schoolTable">
+        </table>
+    </div>
+</div>
+</body>
+
+</html>

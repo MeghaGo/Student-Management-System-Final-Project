@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<!--    <script type="text/javascript" th:src="@{/js/course-ajax.js}"></script>-->
+
+
+    <!-- MDB -->
+    <script
+            type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.4.0/mdb.min.js"
+    ></script>
+    <script
+            src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"></script>
+    <!-- MDB -->
+    <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.4.0/mdb.min.css"
+            rel="stylesheet"
+    />
+    <!-- Font Awesome -->
+    <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+            rel="stylesheet"
+    />
+    <!-- Google Fonts -->
+    <link
+            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+            rel="stylesheet"
+    />
+
+
+</head>
+<body>
+<!-- create navigation bar ( header) -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed"
+                    data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+                    aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span> <span
+                    class="icon-bar"></span> <span class="icon-bar"></span> <span
+                    class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#" th:href="@{/}">Student Management System</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<br>
+<br>
+<br>
+<br>
+<div th:switch="${session.message}" >
+    <div th:case="'Accept'" class="alert alert-success">
+        <strong>Accepted!</strong> successfully.
+    </div>
+    <div>
+        <div th:switch="${session.message}">
+            <div th:case="'Delete'" class="alert alert-success">
+                <strong>Rejected!</strong> successfully.
+            </div>
+        </div>
+        <tr>
+
+            <div class="col-md-12" align = "center">
+                <div class="panel-body" align = "center" >
+                    <table class="table">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th>Entrance RollNo </th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>DOB</th>
+                            <th>Entrance Score</th>
+                            <th>Assign Courses</th>
+                            <th>Accept</th>
+                            <th>Reject</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr  th:each="student : ${liststudent}">
+                            <!--		  here liststudent is the model attribute in controller-->
+                            <!--		  it takes all student object from list of student-->
+                            <td th:text="${student.entranceRollNo}">Entrance Roll No </td>
+                            <td th:text="${student.firstName}">First Name</td>
+                            <td th:text="${student.lastName}">Last Name</td>
+                            <td th:text="${student.DOB}">Date of Birth</td>
+                            <td th:text="${student.entranceScore}">Entrance Score</td>
+                            <td>
+                                <button type="button" th:attr="student-id=${student.id}" class="btn btn-primary course-assign" data-mdb-toggle="modal" data-mdb-target="#exampleModal">
+                                    Assign
+                                </button>
+                            </td>
+                            <td>
+                                <a th:href="@{'/accept/' + ${student.id}+ '/' +${student.loggedInEmail}}">Accept</a>
+                            </td>
+                            <td>
+                                <a th:href="@{'/delete/' + ${student.id}+'/'+ ${student.loggedInEmail}}">Reject</a>
+                            </td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </div>
+
+        </tr>
+
+        </tbody>
+        </table>
+    </div>
+</div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Assign Course to Student</h5>
+                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6 col-offset-3 justify-text-center">
+                        <div class="select-outline">
+                            <select class="mdb-select md-form md-outline colorful-select dropdown-primary course filter "
+                                    id="selectCourse">
+                                <option value="" selected>All</option>
+                                <div th:each="course : ${courses}">
+                                    <option th:value="${course.id}"><span th:text="${course.courseName}"></span></option>
+                                </div>
+                            </select>
+                            <label for="selectCourse">Course</label>
+                        </div>
+                    </div>
+                    <input type="hidden" class="studentId" value="">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="assignCourse()">Assign</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+ var loc = window.location;
+    var baseUrl = loc.protocol + "//" + loc.hostname + (loc.port? ":"+loc.port : "") + "/";
+
+$(document).on('click', ".course-assign", function(){
+    var studentId = $(this).attr('student-id');
+    console.log(studentId, "Student");
+    $(".studentId").val(studentId);
+})
+
+function assignCourse(){
+    let studentId = $(".studentId").val();
+    let courseId = $("#selectCourse :selected").val();
+
+    console.log(studentId, courseId);
+
+    $.ajax({
+    type: "Post",
+    url: baseUrl + "api/v1/students/assign",
+    data: {
+    studentId, courseId
+    },
+    dataType: 'json',
+    success:function(response){
+    location.href = 'users';
+    },
+    error: function(err){
+    alert("error id"+ err)}
+    })
+}
+</script>
+</html>

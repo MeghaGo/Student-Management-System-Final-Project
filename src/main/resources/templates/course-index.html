@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:tb="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Courses</title>
+    <script
+            src="https://code.jquery.com/jquery-3.6.0.js"
+            integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+            crossorigin="anonymous"></script>
+
+    <script type="text/javascript" th:src="@{/js/course-ajax.js}"></script>
+    <script src= "https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" ></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/cosmo/bootstrap.min.css" />
+</head>
+<body>
+
+<br>
+<div class = "row">
+    <div class="col-sm-4 col-md-5 ml-1">
+        <!-- th:action="@{/saveSchool}"-->
+        <form action="#" th:action="@{#}" method="post" id ="saveCourse">
+            <div alight="left">
+                <tr>
+                    <label class="form-label block-id" >Id</label>
+                    <td>
+                        <input type="number" class="form-control" disabled  id="id_course"/>
+                    </td>
+                </tr>
+            </div>
+
+            <div alight="left">
+                <tr>
+                    <label class="form-label" >Course Name </label>
+                    <td><input type="text" name="courseName" class="form-control" id= "courseName" placeholder="Course Name" /></td>
+                </tr>
+            </div>
+            <div alight="left">
+                <tr>
+                    <label class="form-label" >Course Credit Hours</label>
+                    <td><input type="number" name="courseCreditHour"  class="form-control" id="courseCreditHour" placeholder="Course Credit Hour" /></td>
+                </tr>
+            </div>
+            <div alight="left">
+                <tr>
+                    <label class="form-label" >Course Full Marks</label>
+                    <td><input type="number" name="courseFullMarks" class="form-control" id="courseFullMarks" placeholder="Course Full Mark" /></td>
+                </tr>
+            </div>
+            <div alight="left">
+                <tr>
+                    <label class="form-label" >Course Pass Marks</label>
+                    <td><input type="number" name="coursePassMarks" class="form-control" id="coursePassMarks" placeholder="coursePassMarks" /></td>
+                </tr>
+            </div>
+            <br>
+            <tr>
+                <td colspan="2"><button type="submit" class="btn btn-info"  onclick="alertSave(), saveData()">Save</button> </td>
+            </tr>
+            </table>
+        </form>
+    </div>
+    <div class="col-md-6">
+        <h3>Course Records</h3>
+        <br>
+        <table class="table table-hover" id="courseTable">
+        </table>
+    </div>
+</div>
+</body>
+
+</html>
