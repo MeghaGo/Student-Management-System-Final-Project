@@ -49,7 +49,10 @@ public class MainController {
         return "applicants";
     }
     @GetMapping("/accept/{rollNo}/{loggedInEmail}")
-    public String accept(@PathVariable("rollNo") Long rollNo, @PathVariable("loggedInEmail") String loggedInEmail){
+    public String accept(
+            @PathVariable("rollNo") Long rollNo,
+            @PathVariable("loggedInEmail") String loggedInEmail
+    ){
         session.setAttribute("message","Accept");
         Student student= studentService.get(loggedInEmail);
         student.setAssignedMessage("Accepted");
@@ -57,21 +60,17 @@ public class MainController {
         return "redirect:/users?success";
     }
     @RequestMapping("/delete/{rollNo}/{loggedInEmail}")
-    public String delete(@PathVariable("rollNo") Long rollNo, @PathVariable("loggedInEmail") String loggedInEmail) {
-//        studentService.delete(rollNo);
-        Student student= studentService.get(loggedInEmail);
+    public String delete(
+            @PathVariable("rollNo") Long rollNo,
+            @PathVariable("loggedInEmail") String loggedInEmail
+    ) {
+        Student student = studentService.get(loggedInEmail);
         System.out.println(student);
         student.setAssignedMessage("Rejected");
         studentRepository.save(student);
-//       session.setAttribute("meessageStudent",student);
-        session.setAttribute("message","Delete");
+        session.setAttribute("message", "Delete");
         return "redirect:/users?success";
     }
-//    @GetMapping("/apply")
-//    public User apply(@ModelAttribute UserRegistrationDto userRegistrationDto){
-//        model.addAttribute("student",userRegistrationDto);
-//        return userService.save(userRegistrationDto);
-//    }
 
     @GetMapping("/welcome")
     public String welcome(Model model) {
@@ -85,11 +84,9 @@ public class MainController {
             if(student != null && student.getAssignedMessage()==null){
                 student.setAssignedMessage(" ");
             }
-            //studentService.save(student);
             model.addAttribute("student", student);
             return "welcome";
         }
-
         return "redirect:/login?failed";
     }
 

@@ -33,5 +33,4 @@ public class Course {
     public  Course(Long id){
         this.id  = id;
     }
-
 }

@@ -14,17 +14,27 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
+
     private Integer entranceRollNo;
+
     private String firstName;
+
     private String lastName;
+
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date DOB;
+
     private String address;
+
     private Float entranceScore;
+
     private String identityNo;
+
     @Column(unique = true)
     private String loggedInEmail;
+
     private String assignedMessage;
+
     @OneToOne
     private  Course course;
 

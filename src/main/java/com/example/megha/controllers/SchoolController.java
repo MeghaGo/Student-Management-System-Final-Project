@@ -21,6 +21,7 @@ public class SchoolController {
     public String add (Model model) {
         return "new";
     }
+
     @ResponseBody
     @PostMapping("/schools")
     public Response findAllSchools(){

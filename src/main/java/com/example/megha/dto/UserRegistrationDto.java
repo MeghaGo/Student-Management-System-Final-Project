@@ -3,10 +3,6 @@ package com.example.megha.dto;
 import javax.persistence.Column;
 
 public class UserRegistrationDto {
-    /*dto is datatransferobject  this is a design pattern to use dto object to transfer between server and
-    client and vice versa instead of passing instead of passing single information it is  used to pass bulck
-            infromation between client and server*/
-
 
     private String firstName;
     private String lastName;

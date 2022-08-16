@@ -22,7 +22,7 @@ public class User {
     @NotEmpty(message="last_name cannot be empty")
     private String lastName;
     @NotEmpty(message="email cannot be empty")
-    private String email; //here column name is email
+    private String email;
     @NotEmpty(message="password cannot be empty")
     private String password;
 
@@ -30,19 +30,17 @@ public class User {
     private boolean admin;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    //we use eager if we want fetch all and lazy if we want fetcg specified one
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(
-                    name = "user_id", referencedColumnName = "id"//this is the foreign key i.e primary key of table user
+                    name = "user_id", referencedColumnName = "id"
             ),
             inverseJoinColumns = @JoinColumn(
                     name = "role_id", referencedColumnName = "id"))
-    //we add third table using join table annotations
+
     private Collection<Role> roles;
 
     public User() {
-
     }
 
     public User(String firstName, String lastName, String email, String password, boolean admin, Collection<Role> roles) {

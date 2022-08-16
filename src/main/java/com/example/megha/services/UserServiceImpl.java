@@ -5,6 +5,7 @@ import com.example.megha.model.Role;
 import com.example.megha.model.User;
 import com.example.megha.repository.RoleRepository;
 import com.example.megha.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -18,31 +19,17 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-    private UserRepository userRepository;
-    /*@Autowired UserRepository userRepository;
-    this is the field base injection here we inject the UserRepository in the Service
-     */
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
-    @Autowired
-    private RoleRepository roleRepository;
+    private final UserRepository userRepository;
+    private final BCryptPasswordEncoder passwordEncoder;
+    private final RoleRepository roleRepository;
 
-    //lets now inject using constructor based injector
-
-
-    public UserServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
-    // this helps to inject the object of userRepository in the UserServiceImpl
-    @Override// it implements the method of interface
+    @Override
     public User save(UserRegistrationDto registrationDto) {
 
         User user = new User(registrationDto.getFirstName(), registrationDto.getLastName(),
                 registrationDto.getEmail(), passwordEncoder.encode(registrationDto.getPassword()), registrationDto.isAdmin(), Arrays.asList(new Role("ROLE_ADMIN")));
-        //here object of role is created, it called the constructor of Role
-        /*Here passwordEncoder.encode() which is the object of BcryptPasswordEncoder encode the password which is stored in database*/
         return userRepository.save(user);
     }
 
@@ -56,14 +43,6 @@ public class UserServiceImpl implements UserService {
     }
 
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
-        /*this is a method which maps the roles to the authorities*
-        Here this collection is extended to the grantedAuthority
-        Here collection collects the roles which is of tye Role(Object)
-         */
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
-        /*We just converted roles into stream on top stream we map a role we convert role into simplegrantedAsuthority
-         * object in this class we pass the role name finally we collected stream into the list and finally this list
-         * is returned to the UserDetails*/
     }
-
 }

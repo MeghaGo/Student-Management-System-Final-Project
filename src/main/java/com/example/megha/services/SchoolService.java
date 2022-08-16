@@ -13,18 +13,18 @@ import java.util.List;
 public class SchoolService {
     private final SchoolRepository schoolRepository;
 
-    public List<School> listAll(){ return schoolRepository.findAll();}
+    public List<School> listAll(){
+        return schoolRepository.findAll();
+    }
 
     public School save(School sl) {
         School school =schoolRepository.save(sl);
         return  school;
-
     }
 
-    public School get(long id)
-    {
-
-        return schoolRepository.findById(id).get();}
+    public School get(long id) {
+        return schoolRepository.findById(id).get();
+    }
 
     public void delete (long id) {
         schoolRepository.deleteById(id);

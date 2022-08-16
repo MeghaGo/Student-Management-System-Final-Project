@@ -13,8 +13,7 @@ public class Role {
     public Role() {
 
     }
-
-    public Role(String name) { //we do not pass id to the constructor since its generation strategy is autoincremente
+    public Role(String name) {
         super();
         this.name = name;
     }

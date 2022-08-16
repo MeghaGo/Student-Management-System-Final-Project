@@ -6,10 +6,7 @@ import com.example.megha.model.Student;
 import com.example.megha.services.CourseService;
 import com.example.megha.services.StudentService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.sql.ResultSet;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,7 +17,7 @@ public class StudentController {
 
     private final StudentService studentService;
     private  final CourseService courseService;
-    //    build create student REST API
+
     @PostMapping
     public Response createStudent(@RequestBody Student student){
        Student std =  studentService.save(student);
@@ -28,17 +25,15 @@ public class StudentController {
        boolean success =  true;
         return new Response(std, message, success );
     }
-    //    build get Student by rollNo REST API
+
     @GetMapping("{id}")
     public Response getStudentById(@PathVariable  Long id){
-//        responseentity is to provide  complete response to this api
-//        pathvariable extracts rollNo from URL
         Student student = studentService.get(id);
         boolean success = true;
         String message = "Successfully Fetched data";
         return new Response(student, message, success );
     }
-    //    build edit Student by rollNo REST API
+
     @PutMapping("{id}")
     public Response updateStudent(
             @RequestBody Student student,
@@ -49,7 +44,7 @@ public class StudentController {
         Student studentEdit = studentService.update(student, id);
         return new Response(studentEdit, message, success);
     }
-    //        build delete student by rollNo REST API
+
     @DeleteMapping("{id}")
     public Response deleteStudent(
             @PathVariable Long id
@@ -58,7 +53,6 @@ public class StudentController {
         String message = "Successfully deleted student";
         boolean success = true;
         return new Response(null, message, success);
-
     }
 
     @PostMapping("/assign")
